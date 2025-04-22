@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 import { useLocation, useNavigate, Link , useParams} from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { FileText, BarChart2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-
+import html2pdf from "html2pdf.js";  // Import jsPDF
 
 const SummaryGeneration = () => {
   const location = useLocation();
@@ -18,7 +18,7 @@ const SummaryGeneration = () => {
   const [keyClauses, setKeyClauses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [document, setDocument] = useState({ title: "", type: "", fileSize: "" });
-
+  const pageRef = useRef(null);
 
   useEffect(() => {
     const state = location.state;
@@ -54,33 +54,7 @@ const SummaryGeneration = () => {
     }
   }, [docid, location.state, navigate]);
 
-
-
-  const handlePlainDownload = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/summary/download_plaintext/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ summary, keyClauses })
-      });
-
-      const data = await response.blob();
-
-      const url = window.URL.createObjectURL(data);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "summary_and_clauses.txt";
-      link.click();
-      window.URL.revokeObjectURL(url);
-
-    } catch (err) {
-      console.error("Download failed:", err);
-      alert("Something went wrong. Try again.");
-    }
-  };
-
+  //Regenerating the summary
   const handleRegenerate = async () => {
     if (!docid) {
       console.error("ID is missing");
@@ -108,9 +82,26 @@ const SummaryGeneration = () => {
     }
   };
 
+  // downloading it
+  const handleDownloadPageAsPDF = () => {
+    const element = pageRef.current;
+    if (!element) return;
+
+    const options = {
+      margin: 0.5,
+      filename: 'document_summary.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+
+    html2pdf().set(options).from(element).save();
+  };
+
+  
   return (
     <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-[#F5EEDC] via-[#f9f5ef] to-white p-6">
-      <div className="max-w-4xl mx-auto">
+      <div ref={pageRef} className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Document Summary</h1>
         </div>
@@ -153,31 +144,23 @@ const SummaryGeneration = () => {
             </CardContent>
           </Card>
         </div>
+      </div>
 
-        <div className="flex flex-wrap justify-center gap-4 mt-6">
-        <Button 
-        variant="outline" 
-        onClick={handleRegenerate} 
-        disabled={loading}
-      >
-        {loading ? (
-          <Spinner animation="border" size="sm" />
-        ) : (
-          "Regenerate Summary"
-        )}
-      </Button>
+      <div className="flex flex-wrap justify-center gap-4 mt-6">
+        <Button variant="outline" onClick={handleRegenerate} disabled={loading}>
+          {loading ? <Spinner animation="border" size="sm" /> : "Regenerate Summary"}
+        </Button>
 
-          <Button variant="default" onClick={handlePlainDownload}>
-             Download Summary
+        <Button variant="default" onClick={handleDownloadPageAsPDF}>
+          Download Summary
+        </Button>
+
+        <Link to={`/RiskAnalysis/${user.displayName}`} state={{ document }}>
+          <Button variant="primary">
+            <BarChart2 className="mr-2 h-4 w-4" />
+            View Risk Analysis
           </Button>
-
-          <Link to={`/RiskAnalysis/${user.displayName}`} state={{ document }}>
-            <Button variant="primary">
-              <BarChart2 className="mr-2 h-4 w-4" />
-              View Risk Analysis
-            </Button>
-          </Link>
-        </div>
+        </Link>
       </div>
     </div>
   );

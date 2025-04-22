@@ -14,7 +14,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// 🔹 Sign-in and send data to backend
 const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);

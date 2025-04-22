@@ -8,7 +8,7 @@ const Dashboard = () => {
         const verifyFirebaseToken = async () => {
             if (!user) return;
 
-            const firebaseToken = await user.getIdToken(); // Get Firebase token
+            const firebaseToken = await user.getIdToken();
 
             const response = await fetch("http://127.0.0.1:8000/auth/verify-firebase/", {
                 method: "POST",
