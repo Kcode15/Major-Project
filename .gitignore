@@ -13,17 +13,6 @@ venv/
 # Django media (uploaded files)
 media/
 
-# === Node / React ===
-node_modules/
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-
-# Build outputs
-dist/
-dist-ssr/
-*.local
-
 # === Logs ===
 logs/
 *.log
