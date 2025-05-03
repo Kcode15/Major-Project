@@ -42,3 +42,8 @@ cd Frontend
 npm install
 npm run dev
 ```
+### Team Members:
+- [Khushi Mantri](https://github.com/kcode15)
+- [Rashi Potey](https://github.com/Rashipotey)
+- [Shinosha Jain](https://github.com/srj2005)
+- [Sunidhi Admane](https://github.com/sunidhi09062004)
