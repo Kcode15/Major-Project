@@ -131,4 +131,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AES_ENCRYPTION_KEY = b'ThisIsASecretKey1234567890123415'
-print(len(AES_ENCRYPTION_KEY))
+#print(len(AES_ENCRYPTION_KEY))

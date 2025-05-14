@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { FileText, BarChart2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-import html2pdf from "html2pdf.js";  // Import jsPDF
+import html2pdf from "html2pdf.js";  
 
 const SummaryGeneration = () => {
   const location = useLocation();

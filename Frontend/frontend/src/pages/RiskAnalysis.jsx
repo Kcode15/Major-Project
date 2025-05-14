@@ -93,13 +93,6 @@ const RiskAnalysis = () => {
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#fef9f5] via-[#f0f4ff] to-white py-10 px-6">
       <div className="max-w-4xl mx-auto space-y-6">
-    
-        <button
-          onClick={() => navigate(`/summary/${user.displayName}/${data.document_id}`,)}
-          className="mb-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-        >
-          Back to Summary
-        </button>
 
         <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-4"> Risk Analysis Report</h1>
 

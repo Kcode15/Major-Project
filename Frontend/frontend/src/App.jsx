@@ -21,12 +21,9 @@ function App() {
         {user && <Navbar />}
         <FileProvider>
           <Routes>
-            {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
-
-            {/* Redirect unauthenticated users */}
             {user ? (
               <>
                 <Route path="/" element={<Navigate to={`/home/${user.displayName}`} />} />

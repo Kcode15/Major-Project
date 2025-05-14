@@ -2,6 +2,7 @@ import pdfplumber
 import re
 import spacy
 import base64
+import torch
 from transformers import BartTokenizer, BartForConditionalGeneration
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
@@ -33,9 +34,6 @@ def extract_text_from_pdf(pdf_file):
                 text += page_text + "\n\n"
     return text.strip()
 
-def extract_pdf_text_pages(pdf_file):
-    with pdfplumber.open(pdf_file) as pdf:
-        return [page.extract_text() or "" for page in pdf.pages]
 
 
 def extract_contract_type(text):
@@ -92,16 +90,17 @@ def summarize_text(text):
     text = preprocess_for_summary(text)
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=1024)
     
-    summary_ids = model.generate(
-    inputs["input_ids"],
-    max_length=200,
-    num_beams=1,           
-    do_sample=True,
-    top_k=50,
-    top_p=0.9,              
-    temperature=0.95,      
-    early_stopping=True
-)
+    with torch.no_grad():
+        summary_ids = model.generate(
+            inputs["input_ids"],
+            max_length=200,
+            num_beams=1,
+            do_sample=True,
+            top_k=50,
+            top_p=0.9,
+            temperature=0.95,
+            early_stopping=True
+        )
 
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summary.strip()
@@ -118,7 +117,7 @@ def format_summary(summary_text, title="Summary Section"):
             formatted += f"• {line}\n"
     return formatted.strip()
 
-def generate_full_summary(text, version=0):
+def generate_full_summary(text):
     chunks = chunk_text(text)
     summaries = [summarize_text(chunk) for chunk in chunks]
     

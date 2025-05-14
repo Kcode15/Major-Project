@@ -37,7 +37,7 @@ def get_recent_documents(request):
             "title": doc.file_name,
             "contractType": doc.contract_type,
             "uploadDate": doc.upload_date.strftime('%Y-%m-%d %H:%M:%S'),
-            "summary": doc.summary,  # directly accessible summary
+            "summary": doc.summary, 
         }
         for doc in recent_docs
     ]
@@ -67,7 +67,6 @@ def extract_text(request):
         cleaned = clean_text(extracted_text)
         encrypted_cleaned = encrypt_text(cleaned)
         decrypted_cleaned = decrypt_text(encrypted_cleaned)
-
         summary = generate_full_summary(decrypted_cleaned)
         contract_type = extract_contract_type(cleaned)
         key_clauses = extract_key_clauses(extracted_text)
