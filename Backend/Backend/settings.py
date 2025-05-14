@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9v+f(sr@jo)2=y_yci2ga+hymr-n5k)$(*t5*i=%-kz^z2ci@(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["legal-sutra-backend.onrender.com"]
 
 
 # Application definition
