@@ -6,12 +6,12 @@ LegalSutra is a smart legal document analysis tool designed to simplify and auto
 - PDF text extraction  
 - Contract summarization using transformers  
 - Clause and risk identification  
-- Secure storage with AES encryption  
-- Modern React + Django fullstack architecture  
+- Secure storage with AES encryption CBC mode
+- Modern React(Vite) + Django fullstack architecture  
 
 ## Installation
 
-First, create a virtual environment and activate it:
+(Optional) First, create a virtual environment and activate it:
 
 ```bash
 python -m venv venv
