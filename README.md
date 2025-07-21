@@ -2,7 +2,7 @@
 
 LegalSutra is a smart legal document analysis tool designed to simplify and automate the review of contracts and legal texts. It leverages NLP and machine learning to summarize documents, extract key clauses, and assess potential risks. The project supports PDF uploads, provides an intuitive UI, and ensures data security through encryption.
 
-## Features
+## Features of LegalSutra
 - PDF text extraction  
 - Contract summarization using transformers  
 - Clause and risk identification  
