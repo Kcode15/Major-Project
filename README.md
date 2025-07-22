@@ -25,7 +25,6 @@ pip install spacy
 python -m spacy download en_core_web_sm
 pip install transformers
 pip install pycryptodome
-python -m spacy download en_core_web_sm
 ```
 
 ### Running the Project
